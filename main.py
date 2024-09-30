@@ -10,14 +10,20 @@ client = Anthropic(
     api_key=API_KEY,
 )
 
+# TODO: compress test case, flag test_case_compresse = true
+# TODO: compress guidline, guidelines_compressed = true
+# prompt user for additional information
+
 message = client.messages.create(
     max_tokens=1024,
     messages=[
         {
             "role": "user",
-            "content": "Hello, Claude! I am looking forward to work with you and do a reseach on LLM usage for GUI test automation test script generation :)",
+            "content": "What's my name?",
         }
     ],
     model="claude-3-5-sonnet-20240620",
+    temperature=0.4
 )
-print(message.content)
+for content_block in message.content:
+    print(content_block.text)
