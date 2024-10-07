@@ -2,19 +2,20 @@ import os
 from anthropic import Anthropic
 from dotenv import load_dotenv
 
-def compress_guidelines():
+def compress_test_cases():
     load_dotenv()
     API_KEY=os.getenv('ANTHROPIC_API_KEY')
-    GUIDELINES_PATH=os.getenv('GUIDELINES_PATH')
+    TEST_CASES_PATH=os.getenv('TEST_CASES_PATH')
+    COMPRESSED_TEST_CASES=os.getenv('COMPRESSED_TEST_CASES')
 
     client = Anthropic(
         api_key=API_KEY,
     )
     
-    if not os.path.exists(GUIDELINES_PATH):
-        raise FileNotFoundError(f"Error: The file {GUIDELINES_PATH} does not exist.")
+    if not os.path.exists(TEST_CASES_PATH):
+        raise FileNotFoundError(f"Error: The file {TEST_CASES_PATH} does not exist.")
     else:
-        with open(GUIDELINES_PATH, 'r', encoding='utf-8') as file:
+        with open(TEST_CASES_PATH, 'r', encoding='utf-8') as file:
             target_text = file.read()
 
     message = client.messages.create(
@@ -35,10 +36,10 @@ def compress_guidelines():
         ]
     )
 
-    with open('compressed_guidelines.md', 'w', encoding='utf-8') as file:
+    with open(COMPRESSED_TEST_CASES, 'w', encoding='utf-8') as file:
         for content_block in message.content:
             print(content_block.text)
             file.write(content_block.text)
 
 if __name__ == "__main__":
-    compress_guidelines()
+    compress_test_cases()
