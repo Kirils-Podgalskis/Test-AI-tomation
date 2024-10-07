@@ -5,13 +5,11 @@ from compress_guidelines import compress_guidelines
 from compress_test_cases import compress_test_cases
 load_dotenv()
 
+
 API_KEY                     =os.getenv('ANTHROPIC_API_KEY')
 COMPRESSED_GUIDELINES_PATH  =os.getenv('COMPRESSED_GUIDELINES_PATH')
 COMPRESSED_TEST_CASES       =os.getenv('COMPRESSED_TEST_CASES')
 PATH_TO_WRITE_OUTPUT        =os.getenv('PATH_TO_WRITE_OUTPUT')
-
-# TODO: makes this a list for comparing different temperatures
-TEMPERATURE = 0
 
 client = Anthropic(
     api_key=API_KEY,
@@ -32,8 +30,32 @@ with open(COMPRESSED_TEST_CASES, 'r', encoding='utf-8') as file:
     compress_test_casess = file.read()
 
 # TODO: provide POMs
-    # TODO: what format shall I provide POMs?
-# TODO: prompt user for additional information
+    # TODO: what format shall I provide POMs?n
+poms = ['path/to/pom1.py', 'path/to/pom2.py']
+poms_strings = []
+# for pom in poms:
+    # with open(pom, 'r', encoding='utf-8') as file:
+    #     pom_string = file.read()
+    #     poms_strings.add(pom_string) 
+
+# TODO: makes this a list for comparing different temperatures
+TEMPERATURE = 0
+additional_information:str = None
+
+prompt = f"Reconstruct compressed test case in <compressed_test_case>.\n<compressed_test_case>\n{compress_test_casess}\n</compressed_test_case>\nUse reconstructed test case to generate a test script.\nFollow compressed project code guidelines for code generation:\n<compressed_guidelines>\n{compressed_guidelines}\n</compressed_guidelines> \nOutput code only."
+
+if additional_information is not None and additional_information is not '':
+    prompt += 'Consider following additional information when generating code:\n<additional_information>\n'
+    prompt += additional_information
+    prompt += '</additional_information>\n'
+
+if len(poms_strings) is not 0:
+    prompt += 'Refer to following page object models during test generation:\n<page_object_models>\n'
+    for pom_string in poms_strings:
+        prompt += f'{pom_string}\n'
+    prompt += '</page_object_models>\n'
+
+
 # TODO: provide modal currently available test cases with pytest --cleat-test,
 #   so it pottentially skip certain test generation?
 
@@ -48,8 +70,7 @@ message = client.messages.create(
             "content": [
                 {
                     "type": "text",
-                    "text": f"Reconstruct compressed test case in <compressed_test_case>.\n<compressed_test_case>\n{compress_test_casess}\n</compressed_test_case>\nUse reconstructed test case to generate a test script.\nFollow compressed project code guidelines for code generation:\n<compressed_guidelines>\n{compressed_guidelines}\n</compressed_guidelines> \nOutput code only."
-                    # TODO: make  
+                    "text": prompt 
                 }
             ]
         }
