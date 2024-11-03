@@ -169,4 +169,4 @@ compressed_system_info.md
 testing/tests/chromedriver
 testing/tests/*.crx
 testing/tests/llm*.py
-testing/test_cases/*
+testing/test_cases/
