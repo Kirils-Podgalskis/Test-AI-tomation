@@ -2,20 +2,19 @@ import os
 from anthropic import Anthropic
 from dotenv import load_dotenv
 
-def compress_test_cases():
+def compress_system_info():
     load_dotenv()
     API_KEY=os.getenv('ANTHROPIC_API_KEY')
-    TEST_CASES_PATH=os.getenv('TEST_CASES_PATH')
-    COMPRESSED_TEST_CASES=os.getenv('COMPRESSED_TEST_CASES')
-
+    SYSTEM_INFO_PATH=os.getenv('SYSTEM_INFO_PATH')
+    COMPRESSED_SYS_INFO_PATH=os.getenv('COMPRESSED_SYS_INFO_PATH')
     client = Anthropic(
         api_key=API_KEY,
     )
     
-    if not os.path.exists(TEST_CASES_PATH):
-        raise FileNotFoundError(f"Error: The file {TEST_CASES_PATH} does not exist.")
+    if not os.path.exists(SYSTEM_INFO_PATH):
+        raise FileNotFoundError(f"Error: The file {SYSTEM_INFO_PATH} does not exist.")
     else:
-        with open(TEST_CASES_PATH, 'r', encoding='utf-8') as file:
+        with open(SYSTEM_INFO_PATH, 'r', encoding='utf-8') as file:
             target_text = file.read()
 
     message = client.messages.create(
@@ -36,10 +35,10 @@ def compress_test_cases():
         ]
     )
 
-    with open(COMPRESSED_TEST_CASES, 'w', encoding='utf-8') as file:
+    with open(COMPRESSED_SYS_INFO_PATH, 'w', encoding='utf-8') as file:
         for content_block in message.content:
             print(content_block.text)
             file.write(content_block.text)
 
 if __name__ == "__main__":
-    compress_test_cases()
+    compress_system_info()

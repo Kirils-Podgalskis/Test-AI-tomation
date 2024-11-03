@@ -166,3 +166,5 @@ compressed_guidelines.md
 guidelines.md
 system_info.md
 compressed_system_info.md
+testing/tests/chromedriver
+testing/tests/llm*.py
