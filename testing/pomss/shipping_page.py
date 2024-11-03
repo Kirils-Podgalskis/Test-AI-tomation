@@ -1,22 +1,22 @@
 from selenium.webdriver.common.by import By
 
 class ShippingPage():
-    SHIPPING_PAGE_CONTAINER = (By.CSS_SELECTOR,".checkout-index-index")
+    shipping_page_container = (By.CSS_SELECTOR,".checkout-index-index")
 
-    EMAIL_INPUT = (By.CSS_SELECTOR, "#shipping #customer-email")
-    PASSWORD_INPUT = (By.CSS_SELECTOR, "#shipping #customer-password")
-    FIRST_NAME_INPUT = (By.CSS_SELECTOR, "#shipping input[name='firstname']")
-    STREET_INPUT = (By.CSS_SELECTOR, "#shipping input[name='street[0]']")
-    CITY_INPUT = (By.CSS_SELECTOR, "#shipping input[name='city']")
-    ZIP_PASTCODE_INPUT = (By.CSS_SELECTOR, "#shipping input[name='postcode']")
-    STATE_PROVICE_SELECT = (By.CSS_SELECTOR,"#shipping select[name='region_id']")
-    COUNTRY_SELECT = (By.CSS_SELECTOR, "#shipping select[name='country_id']")
-    PHONE_NUMBER = (By.CSS_SELECTOR, "#shipping input[name='telephone']")
+    email_input = (By.CSS_SELECTOR, "#shipping #customer-email")
+    password_input = (By.CSS_SELECTOR, "#shipping #customer-password")
+    first_name_input = (By.CSS_SELECTOR, "#shipping input[name='firstname']")
+    street_input = (By.CSS_SELECTOR, "#shipping input[name='street[0]']")
+    city_input = (By.CSS_SELECTOR, "#shipping input[name='city']")
+    zip_pastcode_input = (By.CSS_SELECTOR, "#shipping input[name='postcode']")
+    state_provice_select = (By.CSS_SELECTOR,"#shipping select[name='region_id']")
+    country_select = (By.CSS_SELECTOR, "#shipping select[name='country_id']")
+    phone_number = (By.CSS_SELECTOR, "#shipping input[name='telephone']")
 
-    NEXT_BUTTON = (By.CSS_SELECTOR, ".continue")
-    PLACE_ORDER_BUTTON = (By.CSS_SELECTOR,'.primary .checkout')
+    next_button = (By.CSS_SELECTOR, ".continue")
+    place_order_button = (By.CSS_SELECTOR,'.primary .checkout')
     
-    ORDER_NUMBER_LABEL =(By.CSS_SELECTOR,".checkout-success > p:nth-child(1)")
+    order_number_label =(By.CSS_SELECTOR,".checkout-success > p:nth-child(1)")
     
     def __init__(self, driver):
         self.driver = driver

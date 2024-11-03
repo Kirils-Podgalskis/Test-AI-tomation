@@ -1,20 +1,20 @@
 from selenium.webdriver.common.by import By
 
 class ShopHeader():
-    SIGN_IN = (By.XPATH, "//*[@class='page-header']//*[contains(text(),'Sign In')]")
-    CART_CONTAINER = (By.CSS_SELECTOR, '.showcart')
-    CART_COUNTER = (By.CSS_SELECTOR, '.counter-number')
-    SEARCH_BAR = (By.CSS_SELECTOR, '#search')
+    sign_in = (By.XPATH, "//*[@class='page-header']//*[contains(text(),'Sign In')]")
+    cart_container = (By.CSS_SELECTOR, '.showcart')
+    cart_counter = (By.CSS_SELECTOR, '.counter-number')
+    search_bar = (By.CSS_SELECTOR, '#search')
 
-    MESSAGE_BANNER = (By.CSS_SELECTOR, 'div[class="page messages"]')
+    message_banner = (By.CSS_SELECTOR, 'div[class="page messages"]')
 
-    MEN_CATEGORY = (By.CSS_SELECTOR, "#ui-id-2>.nav-3")
-    MEN_CATEGORY_TOOL = (By.CSS_SELECTOR, ".nav-3-1")
-    MEN_CATEGORY_TOOL_TANKS = (By.CSS_SELECTOR, ".nav-3-1-4")
+    men_category = (By.CSS_SELECTOR, "#ui-id-2>.nav-3")
+    men_category_tool = (By.CSS_SELECTOR, ".nav-3-1")
+    men_category_tool_tanks = (By.CSS_SELECTOR, ".nav-3-1-4")
 
-    ALL_TOP_CATEGORIES = (By.CSS_SELECTOR, '.level1 > a[href*="tops"]') 
-    ALL_HOODIES_AND_SWEATSHIRTS = (By.XPATH, "//*[contains(text(),'Hoodies & Sweatshirts')]")
-    ALL_TANKS = (By.CSS_SELECTOR, '.level2 > a[href*="tanks"]')
+    all_top_categories = (By.CSS_SELECTOR, '.level1 > a[href*="tops"]') 
+    all_hoodies_and_sweatshirts = (By.XPATH, "//*[contains(text(),'Hoodies & Sweatshirts')]")
+    all_tanks = (By.CSS_SELECTOR, '.level2 > a[href*="tanks"]')
 
     def __init__(self, driver):
         self.driver = driver

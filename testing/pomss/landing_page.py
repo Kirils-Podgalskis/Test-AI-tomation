@@ -1,14 +1,14 @@
 from selenium.webdriver.common.by import By
 
 class LandingPage():
-    LANDING_CONTAINER = (By.CSS_SELECTOR, 'body[class*="cms-home"]')
+    landing_container = (By.CSS_SELECTOR, 'body[class*="cms-home"]')
     
 
-    ALL_PRODUCTS_PREVIEWS = (By.CSS_SELECTOR, '.product-item')
-    ALL_PRODUCTS_NAME = (By.CSS_SELECTOR, '.product-item-name')
-    ALL_PRODUCTS_ADD_TO_CARD_BUTTONS = (By.CSS_SELECTOR, '.product-item .actions-primary')
+    all_products_previews = (By.CSS_SELECTOR, '.product-item')
+    all_products_name = (By.CSS_SELECTOR, '.product-item-name')
+    all_products_add_to_card_buttons = (By.CSS_SELECTOR, '.product-item .actions-primary')
 
-    FUSION_BACKPACK_PREVIEW = (By.CSS_SELECTOR, '.product-item:nth-child(5)')
+    fusion_backpack_preview = (By.CSS_SELECTOR, '.product-item:nth-child(5)')
     
     def __init__(self, driver):
         self.driver = driver
