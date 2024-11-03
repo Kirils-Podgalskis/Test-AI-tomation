@@ -81,7 +81,7 @@ prompt = f"Reconstruct system descryption in <compressed_system_description> and
 
 message = client.messages.create(
     model="claude-3-5-sonnet-20240620",
-    max_tokens=12000,
+    max_tokens=8192,
     temperature=TEMPERATURE,
     system="You will be using Python 3.10, pytest v8.3.3, and selenium v4.25.0 to generate automated end-to-end test scripts for graphical user interaface test automation.",
     messages=[
