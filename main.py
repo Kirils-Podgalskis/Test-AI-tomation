@@ -12,9 +12,11 @@ API_KEY                     =os.getenv('ANTHROPIC_API_KEY')
 COMPRESSED_GUIDELINES_PATH  =os.getenv('COMPRESSED_GUIDELINES_PATH')
 COMPRESSED_TEST_CASES       =os.getenv('COMPRESSED_TEST_CASES')
 COMPRESSED_SYS_INFO_PATH    =os.getenv('COMPRESSED_SYS_INFO_PATH')
-PATH_TO_WRITE_OUTPUT        =os.getenv('PATH_TO_WRITE_OUTPUT')
 
-TEMPERATURE = float(input("Enter temperature:"))
+# PATH_TO_WRITE_OUTPUT = input("Enter path for the test: ")
+PATH_TO_WRITE_OUTPUT = 'testing/tests/llm_shipping_t02.py'
+# TEMPERATURE = float(input("Enter temperature: "))
+TEMPERATURE = 0.2
 
 client = Anthropic(
     api_key=API_KEY,
@@ -43,13 +45,23 @@ with open(COMPRESSED_SYS_INFO_PATH, 'r', encoding='utf-8') as file:
 
 
 # Providing POMS
-pom_files = set()
-while True:
-    paths = input("Enter one or multiple file paths (separated by commas) or press Enter to finish: ")
-    if paths == "":
-        break
+# pom_files = set()
+pom_files = {
+    'testing/pomss/shop_header.py',
+    'testing/pomss/landing_page.py',
+    'testing/pomss/products_page.py',
+    'testing/pomss/single_product_page.py', 
+    'testing/pomss/shopping_cart_page.py', 
+    'testing/pomss/shipping_page.py',
+    'testing/pomss/login_page.py',
+    'testing/pomss/account_page.py'
+}
+# while True:
+#     paths = input("Enter one or multiple file paths (separated by commas) or press Enter to finish: ")
+#     if paths == "":
+#         break
     
-    pom_files.add(paths)
+#     pom_files.add(paths)
 
 print("Collected file paths:", pom_files)
 
@@ -58,7 +70,7 @@ stringified_poms = []
 for pom in pom_files:
     with open(pom, 'r', encoding='utf-8') as file:
         pom_file = file.read()
-        selectors = re.findall("\s{4}([A-Za-z_]+)\s*=\s*\(By",pom_file)
+        selectors = re.findall("\s{4}([A-Za-z_0-9]+)\s*=\s*\(By",pom_file)
         page_name = re.findall("class (\w+)", pom_file)
         stringified_poms.append({page_name[0]:selectors}) 
 
@@ -70,7 +82,13 @@ if len(stringified_poms) > 0:
         page_objects += f'{pom_string}\n'
     page_objects += '</page_object_models>\n'
 
-user_provided_information = input("Enter additional information or press Enter to finish: ")
+# user_provided_information = input("Enter additional information or press Enter to finish: ")
+# user_provided_information = """This is an example of how elements should be located
+#     product_names = WebDriverWait(driver, 20).until(
+#         EC.visibility_of_all_elements_located(landing_page.all_product_names)
+#     )
+# """
+user_provided_information =""
 additional_information:str = ""
 if user_provided_information is not None and user_provided_information != '':
     additional_information += 'Consider following additional information when generating code:\n<additional_information>\n'
@@ -78,6 +96,9 @@ if user_provided_information is not None and user_provided_information != '':
     additional_information += '</additional_information>\n'
 
 prompt = f"Reconstruct system descryption in <compressed_system_description> and use this information in future tasks.\n<compressed_system_description>\n{compressed_system_info}\n</compressed_system_description>\nReconstruct compressed test case in <compressed_test_case>.\n<compressed_test_case>\n{compressed_test_cases}\n</compressed_test_case>\nUse reconstructed test case to generate a test script. Generate test script code step-by-step: each action and check must be pepresented by code. Consider, that test case is meant for manual testing, therefore test case may not explicitly mention element waits. Carefully analyze each step and 2 neighboring steps to generate robust test and exlude posibilty of the test producing false negatives during execution.\nFollow compressed project code guidelines for code generation:\n<compressed_guidelines>\n{compressed_guidelines}\n</compressed_guidelines>\n{page_objects}{additional_information}\nOutput code only."
+
+print(prompt)
+proceed = input("Proceed?")
 
 message = client.messages.create(
     model="claude-3-5-sonnet-20240620",

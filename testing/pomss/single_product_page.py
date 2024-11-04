@@ -18,7 +18,7 @@ class SingleProductPage():
 
     image_container = (By.CSS_SELECTOR, ".fotorama__grab")
     current_image = (By.CSS_SELECTOR,'.fotorama__grab > div[data-active="true"] .fotorama__img')
-    right_button = (By.CSS_SELECTOR, ".fotorama__arr fotorama__arr--next")
+    right_button = (By.CSS_SELECTOR, "div[class$='fotorama__wrap--toggle-arrows'] .fotorama__arr--next")
 
     add_to_cart_button = (By.CSS_SELECTOR,".actions .primary")
 
